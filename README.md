@@ -12,6 +12,7 @@ The engine is in its initial development phase, and many features are still unde
 - [X] 3D Mathematics for transformations and lighting.
 - [X] Model loading using Blender.
 - [ ] Basic physics and collision detection.
+
 And many more...
 
 ## Contact
