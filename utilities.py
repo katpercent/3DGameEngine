@@ -1,6 +1,6 @@
 import numpy as np
 import math
-import copy
+import pygame as pg
 
 class vec3D:
     def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 1.0):
@@ -17,9 +17,9 @@ class vec3D:
         return self
 
 class Tri:
-    def __init__(self, p1 = vec3D(), p2 = vec3D(), p3 = vec3D()):
+    def __init__(self, p1 = vec3D(), p2 = vec3D(), p3 = vec3D(), col = [0, 0, 0]):
         self.p = [p1, p2, p3]
-        self.col = (0, 0, 0)
+        self.col = col
 
 def MatrixMakeIdentity():
     matrix = np.zeros((4,4), dtype=float)
@@ -135,8 +135,15 @@ def MatrixMultiplyMatrix(m1, m2):
     return np.dot(m1, m2)
 
 def vectorIntersectPlane(plane_p: vec3D, plane_n: vec3D, lineStart: vec3D, lineEnd: vec3D):
+    """
+    Given a plane (plane_p, plane_n) and a line (lineStart, lineEnd), 
+    this function calculates the intersection point of the line with the plane.
+    If the intersection point exists, it returns it; otherwise, it returns None.
+    """
+
     plane_n = VectorNormalise(plane_n)
-    plane_d = -(VectorDotProduct(plane_n, plane_p))
+    plane_d = -VectorDotProduct(plane_n, plane_p)
+    
     ad = VectorDotProduct(lineStart, plane_n)
     bd = VectorDotProduct(lineEnd, plane_n)
     t = (-plane_d - ad) / (bd - ad)
@@ -145,73 +152,67 @@ def vectorIntersectPlane(plane_p: vec3D, plane_n: vec3D, lineStart: vec3D, lineE
     return VectorAdd(lineStart, lineToIntersect)
 
 
-def triangleClipAgainstPlane(plane_p: vec3D, plane_n: vec3D, in_tri: Tri, out_tri1: Tri, out_tri2: Tri) -> int:
-    # Make sure plane normal is indeed normal
-    plane_n = VectorNormalise(plane_n)
+def triangleClipAgainstPlane(plane_p: vec3D, plane_n: vec3D, in_tri: Tri):
+    insidePoints = [vec3D() for _ in range(3)]
+    outsidePoints = [vec3D() for _ in range(3)]
 
-    # Return the dot product between a vector and a plane
-    def dist(p: vec3D) -> float:
-        n = VectorNormalise(p)
-        return (plane_n.x * p.x + plane_n.y * p.y + plane_n.z * p.z - VectorDotProduct(plane_n, plane_p))
+    # Get signed distance from point to plane, used to classify points as inside or outside
+    def getSignedDistance(point: vec3D):
+        return VectorDotProduct(plane_n, point) - VectorDotProduct(plane_n, plane_p)
 
-    # Copy the input triangle to the output triangle
-    out_tri1 = copy.deepcopy(in_tri)
-    out_tri2 = copy.deepcopy(in_tri)
+    d0 = getSignedDistance(in_tri.p[0])
+    d1 = getSignedDistance(in_tri.p[1])
+    d2 = getSignedDistance(in_tri.p[2])
 
-    # Keep track of the number of triangles
-    nClippedTriangles = 0
+    numInsidePoints = 0
+    numOutsidePoints = 0
 
-    # Calculate distances from each vertex of the triangle to the plane
-    d0 = dist(in_tri.p[0])
-    d1 = dist(in_tri.p[1])
-    d2 = dist(in_tri.p[2])
-
-    inside_points = []
-    outside_points = []
-
-    # Categorize the vertices based on their positions relative to the plane
     if d0 >= 0:
-        inside_points.append(in_tri.p[0])
+        insidePoints[numInsidePoints] = in_tri.p[0]
+        numInsidePoints += 1
     else:
-        outside_points.append(in_tri.p[0])
+        outsidePoints[numOutsidePoints] = in_tri.p[0]
+        numOutsidePoints += 1
+
     if d1 >= 0:
-        inside_points.append(in_tri.p[1])
+        insidePoints[numInsidePoints] = in_tri.p[1]
+        numInsidePoints += 1
     else:
-        outside_points.append(in_tri.p[1])
+        outsidePoints[numOutsidePoints] = in_tri.p[1]
+        numOutsidePoints += 1
+
     if d2 >= 0:
-        inside_points.append(in_tri.p[2])
+        insidePoints[numInsidePoints] = in_tri.p[2]
+        numInsidePoints += 1
     else:
-        outside_points.append(in_tri.p[2])
+        outsidePoints[numOutsidePoints] = in_tri.p[2]
+        numOutsidePoints += 1
 
-    # Case 1: All vertices are inside the plane
-    if len(inside_points) == 3:
-        out_tri1 = in_tri
-        nClippedTriangles = 1
+    if numInsidePoints == 0:
+        return 0, []  # Entire triangle is outside the plane, no need to clip
 
-    # Case 2: One vertex is inside the plane
-    elif len(inside_points) == 1 and len(outside_points) == 2:
-        # The first triangle is formed by the inside vertex and the two intersection points
-        out_tri1.p[0] = inside_points[0]
-        out_tri1.p[1] = vectorIntersectPlane(plane_p, plane_n, inside_points[0], outside_points[0])
-        out_tri1.p[2] = vectorIntersectPlane(plane_p, plane_n, inside_points[0], outside_points[1])
-        nClippedTriangles = 1
+    if numInsidePoints == 3:
+        return 1, [in_tri]  # Entire triangle is inside the plane, return the input triangle
 
-    # Case 3: Two vertices are inside the plane
-    elif len(inside_points) == 2 and len(outside_points) == 1:
-        # The first triangle is formed by the two inside vertices and the intersection point
-        out_tri1.p[0] = inside_points[0]
-        out_tri1.p[1] = inside_points[1]
-        out_tri1.p[2] = vectorIntersectPlane(plane_p, plane_n, inside_points[0], outside_points[0])
+    if numInsidePoints == 1 and numOutsidePoints == 2:
+        # One point inside, two outside, output is one new triangle
+        out_tri1 = Tri(insidePoints[0])
+        out_tri1.p[1] = vectorIntersectPlane(plane_p, plane_n, insidePoints[0], outsidePoints[0])
+        out_tri1.p[2] = vectorIntersectPlane(plane_p, plane_n, insidePoints[0], outsidePoints[1])
+        out_tri1.col = in_tri.col
+        return 1, [out_tri1]
 
-        # The second triangle is formed by one inside vertex, the intersection point, and the outside vertex
-        out_tri2.p[0] = inside_points[0]
-        out_tri2.p[1] = vectorIntersectPlane(plane_p, plane_n, inside_points[0], outside_points[0])
-        out_tri2.p[2] = inside_points[1]
-
-        nClippedTriangles = 2
-    return nClippedTriangles
-
-
+    if numInsidePoints == 2 and numOutsidePoints == 1:
+        # Two points inside, one outside, output is two new triangles
+        out_tri1 = Tri(insidePoints[0], insidePoints[1])
+        out_tri1.p[2] = vectorIntersectPlane(plane_p, plane_n, insidePoints[0], outsidePoints[0])
+        out_tri1.col = in_tri.col
+        out_tri2 = Tri(insidePoints[1])
+        out_tri2.p[1] = out_tri1.p[2]
+        out_tri2.p[2] = vectorIntersectPlane(plane_p, plane_n, insidePoints[1], outsidePoints[0])
+        out_tri2.col = in_tri.col
+        return 2, [out_tri1, out_tri2]
+    
 def VectorAdd(v1: vec3D, v2: vec3D):
 	return vec3D(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z)
 
@@ -226,7 +227,8 @@ def VectorMultiplyVector(v1: vec3D, v2: vec3D):
 
 def VectorDiv(v1: vec3D, k):
     if k != 0:
-	    return vec3D(v1.x / k, v1.y / k, v1.z / k)
+        return vec3D(v1.x / k, v1.y / k, v1.z / k)
+    return v1
 
 def VectorDotProduct(v1: vec3D, v2: vec3D):
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
@@ -259,3 +261,12 @@ def GetColour(lum):
 def soleil(vec: vec3D, time):
     matRot = MatrixRotationZ(math.radians(time * 360))
     return vec3D().arrToList(np.dot(matRot, vec.arr()))
+
+
+def fillTri(screen, x1, y1, x2, y2, x3, y3, col):
+    pg.draw.polygon(screen, col, [[x1, y1], [x2, y2], [x3, y3]])
+
+def drawTri(screen, x1, y1, x2, y2, x3, y3, col):
+    pg.draw.line(screen, col, (x1, y1), (x2, y2))
+    pg.draw.line(screen, col, (x2, y2), (x3, y3))
+    pg.draw.line(screen, col, (x3, y3), (x1, y1))
