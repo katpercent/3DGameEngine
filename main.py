@@ -41,6 +41,8 @@ figures = [mesh1]
 #parameter
 startHour = 6
 tickRate = 10
+velocity = 40
+velocityCam = 9
 font = pg.font.SysFont("Verdana", 20)
 
 #base variable
@@ -59,25 +61,25 @@ while running:
 
     keys = pg.key.get_pressed()
     if keys[pg.K_UP]:
-        vCamera.y += 8.0 * fElapsedTime
+        vCamera.y += velocity * fElapsedTime
     if keys[pg.K_DOWN]:
-        vCamera.y -= 8.0 * fElapsedTime
+        vCamera.y -= velocity * fElapsedTime
     if keys[pg.K_RIGHT]:
         vCamera = VectorSub(vCamera, vSide)
     if keys[pg.K_LEFT]:
         vCamera = VectorAdd(vCamera, vSide)
     
-    vForward = VectorMul(vLookFor, 8.0 * fElapsedTime)
-    vSide  = VectorMul(vLookSi, 8.0 * fElapsedTime)
+    vForward = VectorMul(vLookFor, velocity * fElapsedTime)
+    vSide  = VectorMul(vLookSi, velocity * fElapsedTime)
 
     if keys[pg.K_z]:
         vCamera = VectorAdd(vCamera, vForward)
     if keys[pg.K_s]:
         vCamera = VectorSub(vCamera, vForward)
     if keys[pg.K_q]:
-        fYaw += 2.0 * fElapsedTime
+        fYaw += velocityCam * fElapsedTime
     if keys[pg.K_d]:
-        fYaw -= 2.0 * fElapsedTime
+        fYaw -= velocityCam * fElapsedTime
     
     if keys[pg.K_ESCAPE]:
         quit()
