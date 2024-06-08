@@ -1,4 +1,4 @@
-# 3D Game Engine on python
+# 3D Game Engine
 
 The game engine providing a foundation for game creation.
 
@@ -9,7 +9,9 @@ The engine is in its initial development phase, and many features are still unde
 - [ ] A robust optimisation using CUDA.
 - [X] Camera movement.
 - [ ] Game editor for the mapping.
-- [X] 3D Mathematics for transformations and lighting.
+- [X] 3D Mathematics for transformations.
+- [X] Ray tracing
+- [ ] Textures
 - [X] Model loading using Blender.
 - [ ] Basic physics and collision detection.
 
@@ -17,4 +19,4 @@ And many more...
 
 ## Contact
 
-Discord : k4tpercent
+Discord : katpercent
