@@ -6,22 +6,28 @@ The game engine providing a foundation for game creation.
 
 The engine is in its initial development phase, and many features are still under construction.
 
-- [X] A robust optimisation using CUDA.
-- [X] Camera movement.
-- [ ] Game editor for the mapping.
-- [X] 3D Mathematics for transformations.
+### Phase 1
+- [ ] A robust optimisation
+- [X] Camera movement
+- [X] 3D Mathematics for transformations
 - [X] Ray tracing
 - [ ] Textures
-- [X] Model loading using Blender.
+- [X] Model loading using Blender
+
+### Phase 2
 - [ ] Basic physics and collision detection.
+
+### Phase 3
+- [ ] Game editor for the mapping.
 
 And many more...
 
 ## Priority
 
-1. GameEngine3D MultiPlatform without RTX and CUDA due to hardware issue.
-2. GameEngine3D Windows RTX CUDA.
-3. GameEngine3D Python due to performance issue perhaps i will think a way to fix the performance issue.
+1. GameEngine3D Multi-Platform RTX
+2. GameEngine3D Multi-Platform
+3. GameEngine3D Windows RTX CUDA
+4. GameEngine3D Python
 
 ## Acronyms
 
