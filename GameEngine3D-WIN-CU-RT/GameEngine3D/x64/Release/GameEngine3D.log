@@ -1,0 +1,60 @@
+﻿  Compiling CUDA source file kernel.cu...
+  
+  C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\bin\HostX64\x64" -x cu   -I"C:\Users\khell\OneDrive\Documents\libs\SDL2-2.30.3\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\include"     --keep-dir x64\Release  -maxrregcount=0   --machine 64 --compile -cudart static    -DWIN32 -DWIN64 -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS   /MD " -Xcompiler "/Fdx64\Release\vc143.pdb" -o C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\x64\Release\kernel.cu.obj "C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu" 
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(589): warning #177-D: variable "Far" was declared but never referenced
+        float Far = 1000.0f;
+              ^
+  
+  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(590): warning #177-D: variable "Near" was declared but never referenced
+        float Near = 0.1f;
+              ^
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(592): warning #177-D: variable "Theta" was declared but never referenced
+        float Theta = 0.0f;
+              ^
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(594): warning #177-D: variable "elapsedTime" was declared but never referenced
+        float elapsedTime = 0.0f;
+              ^
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(596): warning #177-D: variable "alb" was declared but never referenced
+        vec4 alb = { 1.0f, 1.0f, 1.0f, 1.0f };
+             ^
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(601): warning #177-D: variable "vSide" was declared but never referenced
+        vec4 vLookSi = { 1.0f }; vec4 vLookFor = { 0.0f, 0.0f, 1.0f }; vec4 vSide = { 0.0f, 0.0f, 0.0f, 1.0f };
+                                                                            ^
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(608): warning #177-D: variable "MeshCoo" was declared but never referenced
+        vec4 MeshCoo[] = { vec4({0.0f, 0.0f, 8.0f, 1.0f}) };
+             ^
+  
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(609): warning #177-D: variable "MeshRot" was declared but never referenced
+        vec4 MeshRot[] = { vec4({0.0, 0.0, 0.0f, 0.0f}) };
+             ^
+  
+  kernel.cu
+  tmpxft_000027cc_00000000-7_kernel.cudafe1.cpp
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(43): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(130): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(591): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(43): warning C4838: la conversion de 'unsigned __int64' en 'int' requiert une conversion restrictive
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\GameEngine3D\kernel.cu(715): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+     Création de la bibliothèque C:\Users\khell\source\repos\GameEngine3D-WIN-CU\x64\Release\GameEngine3D.lib et de l'objet C:\Users\khell\source\repos\GameEngine3D-WIN-CU\x64\Release\GameEngine3D.exp
+LINK : warning LNK4098: conflit entre la bibliothèque par défaut 'LIBCMT' et les autres bibliothèques ; utilisez /NODEFAULTLIB:library
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_CreateWindow
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_SetWindowTitle
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_PollEvent
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_CreateRenderer
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_CreateTexture
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_UpdateTexture
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_RenderClear
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_RenderCopy
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_RenderPresent
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_DestroyTexture
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_GetTicks
+kernel.cu.obj : error LNK2001: symbole externe non résolu SDL_Init
+MSVCRT.lib(exe_main.obj) : error LNK2001: symbole externe non résolu main
+C:\Users\khell\source\repos\GameEngine3D-WIN-CU\x64\Release\GameEngine3D.exe : fatal error LNK1120: 13 externes non résolus
