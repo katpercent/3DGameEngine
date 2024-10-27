@@ -17,6 +17,12 @@ The engine is in its initial development phase, and many features are still unde
 
 And many more...
 
+## Priority
+
+1. GameEngine3D MultiPlatform without RTX and CUDA due to hardware issue.
+2. GameEngine3D Windows RTX CUDA.
+3. GameEngine3D Python due to performance issue.
+
 ## Acronyms
 
 WIN = Windows Only,
