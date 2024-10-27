@@ -19,9 +19,9 @@ And many more...
 
 ## Acronyms
 
-WIN = Windows Only
-CU = write with CUDA
-MP = Multi-Platform (windows/linux)
+WIN = Windows Only,
+CU = write with CUDA,
+MP = Multi-Platform (windows/linux),
 RT = Utilize Ray Tracing for lightning (Very resource intensive)
 
 ## Contact
