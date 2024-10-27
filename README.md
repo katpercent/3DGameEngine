@@ -1,4 +1,4 @@
-# 3D Game Engine
+# Game Engine 3D
 
 The game engine providing a foundation for game creation.
 
@@ -6,7 +6,7 @@ The game engine providing a foundation for game creation.
 
 The engine is in its initial development phase, and many features are still under construction.
 
-- [ ] A robust optimisation using CUDA.
+- [X] A robust optimisation using CUDA.
 - [X] Camera movement.
 - [ ] Game editor for the mapping.
 - [X] 3D Mathematics for transformations.
@@ -16,6 +16,13 @@ The engine is in its initial development phase, and many features are still unde
 - [ ] Basic physics and collision detection.
 
 And many more...
+
+## Acronyms
+
+WIN = Windows Only
+CU = write with CUDA
+MP = Multi-Platform (windows/linux)
+RT = Utilize Ray Tracing for lightning (Very resource intensive)
 
 ## Contact
 
