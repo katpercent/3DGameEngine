@@ -566,7 +566,7 @@ int main(int argc, char* argv[])
 
     std::string argv_str(argv[0]);
     std::string base = argv_str.substr(0, argv_str.find_last_of("\\"));
-    std::string PathObject3D = base + "\\";
+    std::string PathObject3D = base + "\\obj\\";
     vec4 lightPos = { 0.0f, 0.0f, 0.0f, 1.0f};
     std::string Mesh[] = { "Wall.obj" };
     vec4 MeshCoo[] = { vec4({0.0f, 0.0f, 20.0f, 0.04f}) };
