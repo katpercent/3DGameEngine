@@ -13,6 +13,7 @@ The engine is in its initial development phase, and many features are still unde
 - [X] Ray tracing
 - [ ] Textures
 - [X] Model loading using Blender
+- [ ] Add a sky and reflect it
 
 ### Phase 2
 - [ ] Basic physics and collision detection.
