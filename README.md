@@ -21,7 +21,7 @@ And many more...
 
 1. GameEngine3D MultiPlatform without RTX and CUDA due to hardware issue.
 2. GameEngine3D Windows RTX CUDA.
-3. GameEngine3D Python due to performance issue.
+3. GameEngine3D Python due to performance issue perhaps i will think a way to fix the performance issue.
 
 ## Acronyms
 
