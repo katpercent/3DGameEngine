@@ -29,7 +29,7 @@ And many more...
 2. GameEngine3D Multi-Platform
 3. GameEngine3D Windows RTX CUDA
 
-(I don't think i will continue the python version)
+(I don't think i will continue the python version due to performance issue)
 
 ## Acronyms
 
